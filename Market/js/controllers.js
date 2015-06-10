@@ -27,8 +27,35 @@
             }
         ])
 
-        .controller('SliderCtrl', ['$scope', function($scope) {
+        .controller('SliderCtrl', ['$scope', 'FileUploader', function ($scope, FileUploader) {
+            $scope.uploader = new FileUploader();
+            $scope.uploader.queueLimit = 1;
+            $scope.uploader.formData = { text: 'aaa'};
+            $scope.uploader.method = 'POST';
+            $scope.uploader.url = 'api/slider/add';
+            $scope.uploader.removeAfterUpload = true;
+           
+            $scope.myInterval = 5000;
+            $scope.slides = [];
+            $scope.slides.push({
+                image: 'http://telhouse.ru/static/img/0000/0003/8537/38537559.tfws2aa5h6.W1170.png',
+                text: 'one'
+            });
+            $scope.slides.push({
+                image: 'http://telhouse.ru/static/img/0000/0003/8537/38537138.zb7lzw6o7d.W1170.png',
+                text: 'two'
+            });
+            $scope.slides.push({
+                image: 'http://telhouse.ru/static/img/0000/0003/8537/38537559.tfws2aa5h6.W1170.png',
+                text: 'three'
+            });
+
             
+            //$scope.slider.addImage = function(image) {
+            //    console.log(image);
+            //};
+
+            $scope.isCollapsed = true;
         }])
 
         .controller('NewsController', [

@@ -6,7 +6,9 @@
         'market.factories',
         'angular-loading-bar',
         'ngAnimate',
-        'LocalStorageModule'])
+        'LocalStorageModule',
+        'ui.bootstrap',
+        'angularFileUpload'])
         .config([
             '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
                 $routeProvider
