@@ -1,0 +1,19 @@
+<div ng-repeat="postedNew in model.news" class="panel panel-default">
+    <div class="panel-heading">
+        {{postedNew.Name}}
+    </div>
+    <div class="panel-body">
+        <div class="col-md-10">
+            {{postedNew.Description | limitTo : 500}}
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-warning" ng-click="editNew(postedNew)">Edit</button>
+            <button class="btn btn-danger" ng-click="deleteNew(postedNew)">Delete</button>
+        </div>
+    </div>
+</div>
+<div ng-show="authentication.isAuth && authentication.userName == 'admin'">
+    <p><input class="form-control" ng-model="model.NewName" type="text" /></p>
+    <p><textarea class="form-control" ng-model="model.NewDescription"></textarea></p>
+    <p><button class="btn btn-warning" ng-click="addNew()">Add new</button></p>
+</div>

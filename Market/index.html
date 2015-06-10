@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="market">
+<head>
+    <title></title>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-route.min.js"></script>
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/angular-animate.min.js"></script>
+    <script src="Scripts/loading-bar.min.js"></script>
+    <script src="Scripts/angular-local-storage.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/factories.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/loading-bar.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="container" ng-controller="IndexController">
+    <slider-ctrl></slider-ctrl>
+    <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+            <li><a href="#/home">Home</a></li>
+            <li><a href="#/news">News</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li data-ng-hide="!authentication.isAuth"><a href>Welcome {{authentication.userName}}</a></li>
+            <!--<li data-ng-hide="!authentication.isAuth"><a href="#/orders">My Orders</a></li>-->
+            <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
+            <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
+            <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <div ng-view></div>
+    </div>
+</div>
+    
+</body>
+</html>

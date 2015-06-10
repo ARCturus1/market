@@ -1,0 +1,14 @@
+﻿<!--strong>{{product.name}}</strong>
+<p>{{product.description}}</p>
+<blockquote>{{product.price}} р.</blockquote-->
+<div class="col-sm-5 col-md-3">
+    <div class="thumbnail">
+      <img ng-src="{{product.File.FileName}}" ng-if="!!product.file">
+      <div class="caption">
+        <h3>{{product.Name}}</h3>
+        <p>{{product.Description | limitTo:255}}</p>
+        <p>{{product.Price}} р.</p>
+        <p><button ng-click="addToPurchase(product)" class="btn btn-primary" role="button">Добавить в корзину</button></p>
+      </div>
+    </div>
+</div>
