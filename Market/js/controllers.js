@@ -42,8 +42,6 @@
                             file: file
                         }).progress(function(evt) {
                             $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-                            //$scope.log = 'progress: ' + progressPercentage + '% ' +
-                            //            evt.config.file.name + '\n' + $scope.log;
                         }).success(function(data, status, headers, config) {
                             $scope.progress = 0;
                             sliderService.getSlides().success(function (data) {

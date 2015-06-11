@@ -1,10 +1,10 @@
 ﻿<div>
     <carousel interval="myInterval">
         <slide ng-repeat="slide in slides" active="slide.active">
-            <img ng-src="{{slide.image}}" style="margin: auto;">
+            <img ng-src="{{slide.image}}" style="margin: auto; height: 305px;">
             <div class="carousel-caption">
-                <h4>Slide {{$index}}</h4>
-                <p>{{slide.text}}</p>
+                <!--<h4>Slide {{$index}}</h4>-->
+                <h4>{{slide.text}}</h4>
             </div>
         </slide>
     </carousel>
@@ -16,20 +16,27 @@
         <hr>
         <div collapse="isCollapsed">
             <div class="well well-lg">
-                <form>
-                    <input class="form-control" type="text" placeholder="Введите текст картинки" ng-model="slide.textForSlide" required/>
-                    <!--<input class="form-control" type="file" ng-click="slider.addImage(this)"/>-->
-                    <div class="btn btn-success" ngf-select ngf-change="upload($files)" ngf-multiple="multiple">Select File</div><br />
-                    
-                    <div ng-if="progress">
-                        <progressbar class="progress-striped active" value="progress" max="100" type="warning">{{progress}}%</progressbar>
+                <form class="form-inline" ng-submit="upload(files)">
+                    <div class="form-group">
+                        <label for="text">Текст слайда</label>
+                        <input id="text" class="form-control" type="text" placeholder="Введите текст слайда" ng-model="slide.textForSlide" required />
                     </div>
-                    <div class="row">
-                        <div ng-repeat="slide in slides">
-                            <slider-item-ctrl></slider-item-ctrl>
-                        </div>
+                    <div class="form-group">
+                        <label for="files"></label>
+                        <!--<input type="text" ng-model="files[0].name" disabled required/>-->
+                        <div id="files" class="btn btn-warning form-control" ngf-select ng-model="files" ngf-multiple="multiple">Выбрать файл</div>
                     </div>
+                    <input type="submit" class="btn btn-success" value="Сохранить" />
                 </form>
+
+                <div ng-if="progress">
+                    <progressbar class="progress-striped active" value="progress" max="100" type="warning">{{progress}}%</progressbar>
+                </div>
+                <div class="row panel" ng-if="slides.lenght > 0">
+                    <div ng-repeat="slide in slides">
+                        <slider-item-ctrl></slider-item-ctrl>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
