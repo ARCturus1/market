@@ -133,6 +133,9 @@
                 return {
                     getSlides: function() {
                         return $http.get('api/slider');
+                    },
+                    deleteSlide: function(id) {
+                        return $http.delete('api/slider/' + id);
                     }
                 }
             }

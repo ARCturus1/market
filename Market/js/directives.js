@@ -13,5 +13,12 @@
                 templateUrl: 'Views/slider.html',
                 controller: 'SliderCtrl'
             }
+        })
+        .directive('sliderItemCtrl', function () {
+            return {
+                restrict: 'E',
+                templateUrl: 'Views/sliderItem.html',
+                controller: 'SliderItemCtrl'
+            }
         });
 })();

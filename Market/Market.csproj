@@ -14,7 +14,7 @@
     <RootNamespace>Market.WebUI</RootNamespace>
     <AssemblyName>Market.WebUI</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -970,6 +970,7 @@
     <Content Include="Views\product.html" />
     <Content Include="Views\signup.html" />
     <Content Include="Views\slider.html" />
+    <Content Include="Views\sliderItem.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1011,7 +1012,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9242</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:9242/</IISUrl>
+          <IISUrl>http://localhost/Market</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

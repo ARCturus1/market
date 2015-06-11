@@ -30,9 +30,9 @@
         .controller('SliderCtrl', ['$scope', 'Upload', 'sliderService', function ($scope, upload, sliderService) {
             $scope.slide = {};
             $scope.slide.textForSlide = '';
-            
-            $scope.upload = function (files) {
-                
+
+            $scope.upload = function(files) {
+
                 if (files && files.length) {
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
@@ -40,13 +40,24 @@
                             url: 'api/slider/add',
                             data: $scope.slide.textForSlide,
                             file: file
-                        }).progress(function (evt) {
+                        }).progress(function(evt) {
                             $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
                             //$scope.log = 'progress: ' + progressPercentage + '% ' +
                             //            evt.config.file.name + '\n' + $scope.log;
-                        }).success(function (data, status, headers, config) {
-                            $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
-                            $scope.$apply();
+                        }).success(function(data, status, headers, config) {
+                            $scope.progress = 0;
+                            sliderService.getSlides().success(function (data) {
+                                $scope.slide.textForSlide = '';
+                                $scope.slides = [];
+                                data.forEach(function(item) {
+                                    $scope.slides.push({ id: item.Id, image: item.FilePath, text: item.Name });
+                                });
+                            }).error(function(error) {
+                                console.error(error);
+                            });
+                        }).error(function(message) {
+                            $scope.progress = 0;
+                            console.error(message);
                         });
                     }
                 }
@@ -57,14 +68,14 @@
             //$scope.uploader.method = 'POST';
             //$scope.uploader.url = 'api/slider/add';
             //$scope.uploader.removeAfterUpload = true;
-           
+
             $scope.myInterval = 5000;
             $scope.slides = [];
-            sliderService.getSlides().success(function(data) {
-                data.forEach(function(item) {
-                    $scope.slides.push({ image: item.FilePath, text: item.Name });
+            sliderService.getSlides().success(function (data) {
+                data.forEach(function (item) {
+                    $scope.slides.push({ id: item.Id, image: item.FilePath, text: item.Name });
                 });
-            }).error(function(error) {
+            }).error(function (error) {
                 console.error(error);
             });
             //$scope.slides.push({
@@ -80,7 +91,7 @@
             //    text: 'three'
             //});
 
-            
+
             //$scope.slider.addImage = function(image) {
             //    console.log(image);
             //};
@@ -88,22 +99,37 @@
             $scope.isCollapsed = true;
         }])
 
+        .controller('SliderItemCtrl', ['$scope', 'sliderService', function ($scope, sliderService) {
+            $scope.deleteSlide = function(slide) {
+                sliderService.deleteSlide(slide.id)
+                    .success(function() {
+                        sliderService.getSlides()
+                            .success(function (data) {
+                                $scope.$parent.$parent.slides = [];
+                                data.forEach(function(item) {
+                                    $scope.$parent.$parent.slides.push({ id: item.Id, image: item.FilePath, text: item.Name });
+                                });
+                            });
+                    });
+            };
+        }])
+
         .controller('NewsController', [
             '$scope', '$http', 'newsService', function ($scope, $http, newsService) {
-                var _updateNewsSuccess = function(data) { $scope.model.news = data; };
-                var _newsError = function(message) { console.error(message); };
+                var _updateNewsSuccess = function (data) { $scope.model.news = data; };
+                var _newsError = function (message) { console.error(message); };
 
                 $scope.model = {};
                 $scope.model.news = [];
 
                 $scope.model.NewName = '';
                 $scope.model.NewDescription = '';
-                $scope.addNew = function() {
+                $scope.addNew = function () {
                     if ($scope.model.NewName == '' || $scope.model.NewDescription == '')
                         return;
 
                     newsService.addNew($scope.model.NewName, $scope.model.NewDescription)
-                        .success(function() {
+                        .success(function () {
                             $scope.model.NewName = '';
                             $scope.model.NewDescription = '';
                             $scope.getNews();
@@ -120,9 +146,9 @@
                 $scope.editNew = function (postedNew) {
                     console.log(postedNew);
                 }
-                $scope.deleteNew = function(postedNew) {
+                $scope.deleteNew = function (postedNew) {
                     newsService.deleteNew(postedNew.NewId)
-                        .success(function() { newsService.getNews().success(_updateNewsSuccess).error(_newsError) })
+                        .success(function () { newsService.getNews().success(_updateNewsSuccess).error(_newsError) })
                         .error(_newsError);
                 }
 

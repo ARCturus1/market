@@ -17,17 +17,18 @@
         <div collapse="isCollapsed">
             <div class="well well-lg">
                 <form>
-                    <input class="form-control" type="text" placeholder="Введите текст картинки" ng-model="slide.textForSlide" />
+                    <input class="form-control" type="text" placeholder="Введите текст картинки" ng-model="slide.textForSlide" required/>
                     <!--<input class="form-control" type="file" ng-click="slider.addImage(this)"/>-->
                     <div class="btn btn-success" ngf-select ngf-change="upload($files)" ngf-multiple="multiple">Select File</div><br />
-                    <p>
-                        <button class="btn btn-success" ng-click="uploader.uploadAll()">Загрузить</button>
-                        <button class="btn btn-danger" ng-click="uploader.clearQueue ()">Отменить</button>
-                    </p>
-                    <div ng-if="uploader.isUploading">
+                    
+                    <div ng-if="progress">
                         <progressbar class="progress-striped active" value="progress" max="100" type="warning">{{progress}}%</progressbar>
                     </div>
-                    
+                    <div class="row">
+                        <div ng-repeat="slide in slides">
+                            <slider-item-ctrl></slider-item-ctrl>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

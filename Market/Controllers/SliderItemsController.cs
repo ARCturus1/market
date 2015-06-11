@@ -15,6 +15,7 @@ using System.Web.Http.Description;
 using MobileStore.Domain.DataLayer;
 using MobileStore.Domain.Entities;
 using Newtonsoft.Json;
+using File = System.IO.File;
 
 namespace Market.WebUI.Controllers
 {
@@ -44,6 +45,7 @@ namespace Market.WebUI.Controllers
         }
 
         // PUT: api/SliderItems/5
+        [Authorize(Users = "admin")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutSliderItem(int id, SliderItem sliderItem)
         {
@@ -79,63 +81,85 @@ namespace Market.WebUI.Controllers
         }
 
         // POST: api/SliderItems
-        [ResponseType(typeof(SliderItem))]
-        public async Task<IHttpActionResult> PostSliderItem(SliderItem sliderItem)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[ResponseType(typeof(SliderItem))]
+        //public async Task<IHttpActionResult> PostSliderItem(SliderItem sliderItem)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            db.SliderItems.Add(sliderItem);
-            await db.SaveChangesAsync();
+        //    db.SliderItems.Add(sliderItem);
+        //    await db.SaveChangesAsync();
 
-            //return CreatedAtRoute("DefaultApi", new { id = sliderItem.Id }, sliderItem);
-            return Ok(sliderItem);
-        }
+        //    //return CreatedAtRoute("DefaultApi", new { id = sliderItem.Id }, sliderItem);
+        //    return Ok(sliderItem);
+        //}
 
         [Route("add")]
+        [Authorize(Users = "admin")]
         public async Task<IHttpActionResult> PostAddSlider()
         {
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
+            //if (!Request.Content.IsMimeMultipartContent())
+            //{
+            //    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            //}
 
-            string root = HttpContext.Current.Server.MapPath("~/Content/Images");
-            var provider = new MultipartFormDataStreamProvider(root);
-            try
-            {
-                // Read the form data.
-                await Request.Content.ReadAsMultipartAsync(provider);
+            //string root = HttpContext.Current.Server.MapPath("~/Content/Images");
+            //var provider = new MultipartFormDataStreamProvider(root);
+            //try
+            //{
+            //    // Read the form data.
+            //    await Request.Content.ReadAsMultipartAsync(provider);
                 
-                string data = provider.FormData["data"];
-                // This illustrates how to get the file names.
-                foreach (MultipartFileData file in provider.FileData)
-                {
-                    ;
-                    db.SliderItems.Add(new SliderItem()
-                    {
-                        FilePath =
-                            HttpContext.Current.Request.Url.MakeRelative(new Uri(file.LocalFileName))
-                                .Remove(0,
-                                    HttpContext.Current.Request.Url.MakeRelative(
-                                        new Uri(HttpContext.Current.Server.MapPath("~"))).Length - 1) +
-                            Path.GetExtension(file.Headers.ContentDisposition.FileName.Split("\"\"".ToCharArray(), StringSplitOptions.None)[1]),
-                        Name = data
-                    });
-                }
-                await db.SaveChangesAsync();
-                return Ok();
-            }
-            catch (System.Exception e)
+            //    string data = provider.FormData["data"];
+            //    // This illustrates how to get the file names.
+            //    foreach (MultipartFileData file in provider.FileData)
+            //    {
+            //        ;
+            //        db.SliderItems.Add(new SliderItem()
+            //        {
+            //            FilePath =
+            //                HttpContext.Current.Request.Url.MakeRelative(new Uri(file.LocalFileName))
+            //                    .Remove(0,
+            //                        HttpContext.Current.Request.Url.MakeRelative(
+            //                            new Uri(HttpContext.Current.Server.MapPath("~"))).Length - 1) +
+            //                Path.GetExtension(file.Headers.ContentDisposition.FileName.Split("\"\"".ToCharArray(), StringSplitOptions.None)[1]),
+            //            Name = data
+            //        });
+            //    }
+            //    await db.SaveChangesAsync();
+            //    return Ok();
+            //}
+            //catch (System.Exception e)
+            //{
+            //    return StatusCode(HttpStatusCode.InternalServerError);
+            //}
+
+            if (HttpContext.Current.Request.Files.Count > 0)
             {
-                return StatusCode(HttpStatusCode.InternalServerError);
+                HttpFileCollection files = HttpContext.Current.Request.Files;
+                var text = HttpContext.Current.Request.Form["data"];
+                string fname = String.Empty;
+                for (int i = 0; i < files.Count; i++)
+                {
+                    HttpPostedFile file = files[i];
+
+                    fname = "Content/Images/" + file.FileName.Trim();
+                    file.SaveAs(HttpContext.Current.Server.MapPath("~/" + fname));
+                }
+                db.SliderItems.Add(new SliderItem() {Name = text, FilePath = fname});
+                await db.SaveChangesAsync();
             }
+            //HttpContext.Current.Response.ContentType = "text/plain";
+            //HttpContext.Current.Response.Write("File/s uploaded successfully!");
+            return Ok();
         }
 
             // DELETE: api/SliderItems/5
+        [Authorize(Users = "admin")]
         [ResponseType(typeof(SliderItem))]
+        [Route("{id}")]
         public async Task<IHttpActionResult> DeleteSliderItem(int id)
         {
             SliderItem sliderItem = await db.SliderItems.FindAsync(id);
@@ -143,7 +167,8 @@ namespace Market.WebUI.Controllers
             {
                 return NotFound();
             }
-
+            var path = HttpContext.Current.Server.MapPath("~/" + sliderItem.FilePath);
+            if (File.Exists(path)) File.Delete(path);
             db.SliderItems.Remove(sliderItem);
             await db.SaveChangesAsync();
 
