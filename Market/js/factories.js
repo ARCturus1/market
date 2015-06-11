@@ -127,5 +127,14 @@
                     }
                 }
             }
+        ])
+        .factory('sliderService', [
+            '$http', function($http) {
+                return {
+                    getSlides: function() {
+                        return $http.get('api/slider');
+                    }
+                }
+            }
         ]);
 })();

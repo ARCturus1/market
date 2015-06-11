@@ -27,28 +27,58 @@
             }
         ])
 
-        .controller('SliderCtrl', ['$scope', 'FileUploader', function ($scope, FileUploader) {
-            $scope.uploader = new FileUploader();
-            $scope.uploader.queueLimit = 1;
-            $scope.uploader.formData = { text: 'aaa'};
-            $scope.uploader.method = 'POST';
-            $scope.uploader.url = 'api/slider/add';
-            $scope.uploader.removeAfterUpload = true;
+        .controller('SliderCtrl', ['$scope', 'Upload', 'sliderService', function ($scope, upload, sliderService) {
+            $scope.slide = {};
+            $scope.slide.textForSlide = '';
+            
+            $scope.upload = function (files) {
+                
+                if (files && files.length) {
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        upload.upload({
+                            url: 'api/slider/add',
+                            data: $scope.slide.textForSlide,
+                            file: file
+                        }).progress(function (evt) {
+                            $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+                            //$scope.log = 'progress: ' + progressPercentage + '% ' +
+                            //            evt.config.file.name + '\n' + $scope.log;
+                        }).success(function (data, status, headers, config) {
+                            $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+                            $scope.$apply();
+                        });
+                    }
+                }
+            };
+            //$scope.uploader = new FileUploader();
+            //$scope.uploader.queueLimit = 1;
+            //$scope.uploader.formData = { text: 'aaa'};
+            //$scope.uploader.method = 'POST';
+            //$scope.uploader.url = 'api/slider/add';
+            //$scope.uploader.removeAfterUpload = true;
            
             $scope.myInterval = 5000;
             $scope.slides = [];
-            $scope.slides.push({
-                image: 'http://telhouse.ru/static/img/0000/0003/8537/38537559.tfws2aa5h6.W1170.png',
-                text: 'one'
+            sliderService.getSlides().success(function(data) {
+                data.forEach(function(item) {
+                    $scope.slides.push({ image: item.FilePath, text: item.Name });
+                });
+            }).error(function(error) {
+                console.error(error);
             });
-            $scope.slides.push({
-                image: 'http://telhouse.ru/static/img/0000/0003/8537/38537138.zb7lzw6o7d.W1170.png',
-                text: 'two'
-            });
-            $scope.slides.push({
-                image: 'http://telhouse.ru/static/img/0000/0003/8537/38537559.tfws2aa5h6.W1170.png',
-                text: 'three'
-            });
+            //$scope.slides.push({
+            //    image: 'http://telhouse.ru/static/img/0000/0003/8537/38537559.tfws2aa5h6.W1170.png',
+            //    text: 'one'
+            //});
+            //$scope.slides.push({
+            //    image: 'http://telhouse.ru/static/img/0000/0003/8537/38537138.zb7lzw6o7d.W1170.png',
+            //    text: 'two'
+            //});
+            //$scope.slides.push({
+            //    image: 'http://telhouse.ru/static/img/0000/0003/8537/38537559.tfws2aa5h6.W1170.png',
+            //    text: 'three'
+            //});
 
             
             //$scope.slider.addImage = function(image) {

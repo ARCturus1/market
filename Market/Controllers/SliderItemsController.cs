@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,6 +14,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using MobileStore.Domain.DataLayer;
 using MobileStore.Domain.Entities;
+using Newtonsoft.Json;
 
 namespace Market.WebUI.Controllers
 {
@@ -21,6 +23,7 @@ namespace Market.WebUI.Controllers
     {
         private MarketDbContext db = new MarketDbContext();
 
+        [Route("")]
         // GET: api/SliderItems
         public IQueryable<SliderItem> GetSliderItems()
         {
@@ -99,19 +102,30 @@ namespace Market.WebUI.Controllers
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            string root = HttpContext.Current.Server.MapPath("~/App_Data");
+            string root = HttpContext.Current.Server.MapPath("~/Content/Images");
             var provider = new MultipartFormDataStreamProvider(root);
             try
             {
                 // Read the form data.
                 await Request.Content.ReadAsMultipartAsync(provider);
-
+                
+                string data = provider.FormData["data"];
                 // This illustrates how to get the file names.
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    Trace.WriteLine(file.Headers.ContentDisposition.FileName);
-                    Trace.WriteLine("Server file path: " + file.LocalFileName);
+                    ;
+                    db.SliderItems.Add(new SliderItem()
+                    {
+                        FilePath =
+                            HttpContext.Current.Request.Url.MakeRelative(new Uri(file.LocalFileName))
+                                .Remove(0,
+                                    HttpContext.Current.Request.Url.MakeRelative(
+                                        new Uri(HttpContext.Current.Server.MapPath("~"))).Length - 1) +
+                            Path.GetExtension(file.Headers.ContentDisposition.FileName.Split("\"\"".ToCharArray(), StringSplitOptions.None)[1]),
+                        Name = data
+                    });
                 }
+                await db.SaveChangesAsync();
                 return Ok();
             }
             catch (System.Exception e)

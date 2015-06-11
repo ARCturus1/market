@@ -17,6 +17,11 @@ namespace Market.WebUI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "Images",
+                routeTemplate: "Content/Images/{image}"
+            );
         }
     }
 }

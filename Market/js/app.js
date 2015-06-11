@@ -8,7 +8,7 @@
         'ngAnimate',
         'LocalStorageModule',
         'ui.bootstrap',
-        'angularFileUpload'])
+        'ngFileUpload'])
         .config([
             '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
                 $routeProvider
