@@ -1,12 +1,10 @@
-﻿<div class="col-md-2">
+﻿<link href="Content/Views/sliderItem.css" rel="stylesheet" />
+<div class="col-md-3">
     <div class="thumbnail">
-        <img ng-src="{{slide.image}}" >
+        <span class="glyphicon glyphicon-remove pull-right" ng-click="deleteSlide(slide)" data-role="deleteSlide"></span>
+        <img ng-src="{{slide.image}}">
         <div class="caption">
-            <h3>{{slide.text}}</h3>
-            <p>
-                <!--<button ng-click="addToPurchase(product)" class="btn btn-primary" role="button">Добавить в корзину</button>-->
-                <span class="glyphicon glyphicon-remove" ng-click="deleteSlide(slide)"></span>
-            </p>
+            <h3 id="sliderText">{{slide.text}}</h3>
         </div>
     </div>
 </div>

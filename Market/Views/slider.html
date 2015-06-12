@@ -1,9 +1,9 @@
-﻿<div>
+﻿<link href="Content/Views/slider.css" rel="stylesheet" />
+<div>
     <carousel interval="myInterval">
         <slide ng-repeat="slide in slides" active="slide.active">
             <img ng-src="{{slide.image}}" style="margin: auto; height: 305px;">
             <div class="carousel-caption">
-                <!--<h4>Slide {{$index}}</h4>-->
                 <h4>{{slide.text}}</h4>
             </div>
         </slide>
@@ -23,17 +23,17 @@
                     </div>
                     <div class="form-group">
                         <label for="files"></label>
-                        <!--<input type="text" ng-model="files[0].name" disabled required/>-->
-                        <div id="files" class="btn btn-warning form-control" ngf-select ng-model="files" ngf-multiple="multiple">Выбрать файл</div>
+                        <div id="files" class="btn btn-warning form-control" ngf-select ng-model="files" ngf-multiple="multiple" required>Выбрать файл</div>
                     </div>
                     <input type="submit" class="btn btn-success" value="Сохранить" />
+                    <input type="button" class="btn btn-success" value="Отмена" ng-click="cleanSlide()" />
                 </form>
 
                 <div ng-if="progress">
                     <progressbar class="progress-striped active" value="progress" max="100" type="warning">{{progress}}%</progressbar>
                 </div>
-                <div class="row panel" ng-if="slides.lenght > 0">
-                    <div ng-repeat="slide in slides">
+                <div class="row panel" ng-if="slides.length > 0" data-role="panel">
+                    <div ng-repeat="slide in slides" data-role="sliderList">
                         <slider-item-ctrl></slider-item-ctrl>
                     </div>
                 </div>
@@ -41,12 +41,3 @@
         </div>
     </div>
 </div>
-<!--<div class="row">
-    <div class="col-md-6">
-        <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
-    </div>
-    <div class="col-md-6">
-        Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
-        <br />Enter a negative number or 0 to stop the interval.
-    </div>
-</div>-->

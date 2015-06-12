@@ -1,0 +1,8 @@
+﻿[data-role=panel] {
+    margin: 15px 5px 15px 5px;
+    border: dashed 5px silver;
+    border-radius: 0;
+}
+[data-role=sliderList] {
+    margin: 20px 5px 0 5px;
+}

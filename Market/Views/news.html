@@ -12,8 +12,19 @@
         </div>
     </div>
 </div>
-<form ng-show="authentication.isAuth && authentication.userName == 'admin'" ng-submit="addNew()">
-    <p><input class="form-control" ng-model="model.NewName" type="text" required /></p>
-    <p><textarea class="form-control" ng-model="model.NewDescription" required></textarea></p>
-    <p><input type="submit" class="btn btn-warning" value="Добавить" /></p>
-</form>
+<div class="row" ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-init="isCollapsed=true">
+    <br>
+    <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
+        <span class="glyphicon glyphicon-arrow-down"></span>
+    </button>
+    <hr>
+    <div collapse="isCollapsed">
+        <div class="well well-lg">
+            <form ng-submit="addNew()">
+                <p><input class="form-control" ng-model="model.NewName" type="text" required /></p>
+                <p><textarea class="form-control" ng-model="model.NewDescription" required></textarea></p>
+                <p><input type="submit" class="btn btn-warning" value="Добавить" /></p>
+            </form>
+        </div>
+    </div>
+</div>

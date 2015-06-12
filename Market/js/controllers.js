@@ -30,9 +30,11 @@
         .controller('SliderCtrl', ['$scope', 'Upload', 'sliderService', function ($scope, upload, sliderService) {
             $scope.slide = {};
             $scope.slide.textForSlide = '';
+            $scope.myInterval = 5000;
+            $scope.slides = [];
+            $scope.files = undefined;
 
-            $scope.upload = function(files) {
-
+            $scope.upload = function (files) {
                 if (files && files.length) {
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
@@ -40,71 +42,51 @@
                             url: 'api/slider/add',
                             data: $scope.slide.textForSlide,
                             file: file
-                        }).progress(function(evt) {
+                        }).progress(function (evt) {
                             $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-                        }).success(function(data, status, headers, config) {
+                        }).success(function (data, status, headers, config) {
                             $scope.progress = 0;
                             sliderService.getSlides().success(function (data) {
                                 $scope.slide.textForSlide = '';
                                 $scope.slides = [];
-                                data.forEach(function(item) {
+                                data.forEach(function (item) {
                                     $scope.slides.push({ id: item.Id, image: item.FilePath, text: item.Name });
                                 });
-                            }).error(function(error) {
+                            }).error(function (error) {
                                 console.error(error);
                             });
-                        }).error(function(message) {
+                        }).error(function (message) {
                             $scope.progress = 0;
                             console.error(message);
                         });
                     }
                 }
             };
-            //$scope.uploader = new FileUploader();
-            //$scope.uploader.queueLimit = 1;
-            //$scope.uploader.formData = { text: 'aaa'};
-            //$scope.uploader.method = 'POST';
-            //$scope.uploader.url = 'api/slider/add';
-            //$scope.uploader.removeAfterUpload = true;
+            $scope.cleanSlide = function() {
+                $scope.files = undefined;
+                $scope.slide.textForSlide = '';
+            }
 
-            $scope.myInterval = 5000;
-            $scope.slides = [];
-            sliderService.getSlides().success(function (data) {
-                data.forEach(function (item) {
-                    $scope.slides.push({ id: item.Id, image: item.FilePath, text: item.Name });
+            sliderService.getSlides()
+                .success(function (data) {
+                    data.forEach(function (item) {
+                        $scope.slides.push({ id: item.Id, image: item.FilePath, text: item.Name });
+                    });
+                }).error(function (error) {
+                    console.error(error);
                 });
-            }).error(function (error) {
-                console.error(error);
-            });
-            //$scope.slides.push({
-            //    image: 'http://telhouse.ru/static/img/0000/0003/8537/38537559.tfws2aa5h6.W1170.png',
-            //    text: 'one'
-            //});
-            //$scope.slides.push({
-            //    image: 'http://telhouse.ru/static/img/0000/0003/8537/38537138.zb7lzw6o7d.W1170.png',
-            //    text: 'two'
-            //});
-            //$scope.slides.push({
-            //    image: 'http://telhouse.ru/static/img/0000/0003/8537/38537559.tfws2aa5h6.W1170.png',
-            //    text: 'three'
-            //});
-
-
-            //$scope.slider.addImage = function(image) {
-            //    console.log(image);
-            //};
-
+            
             $scope.isCollapsed = true;
         }])
 
         .controller('SliderItemCtrl', ['$scope', 'sliderService', function ($scope, sliderService) {
-            $scope.deleteSlide = function(slide) {
+            $scope.deleteSlide = function (slide) {
                 sliderService.deleteSlide(slide.id)
-                    .success(function() {
+                    .success(function () {
                         sliderService.getSlides()
                             .success(function (data) {
                                 $scope.$parent.$parent.slides = [];
-                                data.forEach(function(item) {
+                                data.forEach(function (item) {
                                     $scope.$parent.$parent.slides.push({ id: item.Id, image: item.FilePath, text: item.Name });
                                 });
                             });

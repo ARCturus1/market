@@ -139,6 +139,8 @@
     <Content Include="Content\loading-bar.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="Content\Views\slider.css" />
+    <Content Include="Content\Views\sliderItem.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Icon.png" />
     <Content Include="js\app.js" />

@@ -1,0 +1,9 @@
+﻿span[data-role=deleteSlide] {
+    margin: 5px;
+    font-size: 20px;
+}
+#sliderText {
+    -moz-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
