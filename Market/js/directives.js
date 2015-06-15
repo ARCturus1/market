@@ -14,11 +14,18 @@
                 controller: 'SliderCtrl'
             }
         })
-        .directive('sliderItemCtrl', function () {
+        .directive('sliderItemCtrl', function() {
             return {
                 restrict: 'E',
                 templateUrl: 'Views/sliderItem.html',
                 controller: 'SliderItemCtrl'
             }
         });
+    //.directive('categoryCtrl', function() {
+    //    return {
+    //        restrict: 'E',
+    //        templateUrl: 'Views/category.html',
+    //        controller: 'CategoryCtrl'
+    //    }
+    //});
 })();

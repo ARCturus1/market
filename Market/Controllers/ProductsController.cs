@@ -10,6 +10,7 @@ using MobileStore.Domain.Entities;
 
 namespace Market.WebUI.Controllers
 {
+    [RoutePrefix("api/products")]
     public class ProductsController : ApiController
     {
         private MarketDbContext db = new MarketDbContext();
@@ -20,7 +21,16 @@ namespace Market.WebUI.Controllers
             return db.Products;
         }
 
+        [Route("byCategory/{category}")]
+        public IQueryable<Product> GetProducts(string category)
+        {
+            if (category != null)
+                return db.Products.Where(p => p.Category == category);
+            return db.Products;
+        }
+
         // GET: api/Products/5
+        [Route("product/{id}")]
         [ResponseType(typeof(Product))]
         public async Task<IHttpActionResult> GetProduct(int id)
         {
@@ -31,6 +41,13 @@ namespace Market.WebUI.Controllers
             }
 
             return Ok(product);
+        }
+
+        [Route("categories")]
+        // GET: api/Products
+        public IQueryable<string> GetCategories()
+        {
+            return db.Products.Select(p => p.Category).Distinct();
         }
 
         // PUT: api/Products/5

@@ -33,7 +33,7 @@
                     <progressbar class="progress-striped active" value="progress" max="100" type="warning">{{progress}}%</progressbar>
                 </div>
                 <div class="row panel" ng-if="slides.length > 0" data-role="panel">
-                    <div ng-repeat="slide in slides" data-role="sliderList">
+                    <div ng-repeat="slide in slides" data-role="sliderList" class="animate">
                         <slider-item-ctrl></slider-item-ctrl>
                     </div>
                 </div>

@@ -1,0 +1,5 @@
+﻿<div class="list-group">
+    <!--<a class="list-group-item animate" ng-class="{active : !active}" ng-click="getByCategory()">Все категории</a>-->
+    <a class="list-group-item animate" ng-click="$index !== 0 ? getByCategory(category) : getByCategory()"
+       ng-repeat="category in model.distinctCategories">{{category}}</a>
+</div>

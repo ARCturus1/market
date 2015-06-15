@@ -1,13 +1,30 @@
 ﻿(function () {
+    "use strict";
     angular.module('market.controllers', [])
-
-        .controller('HomeController', [
+        .controller('CatalogController', [
             '$scope', '$http', 'productsService', function ($scope, $http, productsService) {
+                $scope.getByCategory = function (category) {
+                    productsService.getProducts(category)
+                     .success(function (data) { $scope.model.products = data; })
+                     .error(function (message) { console.error(message); });
+                }
+                $scope.getCategories = function () {
+                    $scope.model.categories = [];
+                    $scope.model.categories[0] = 'Все категории';
+                    productsService.getCategories()
+                        .success(function (data) {
+                            angular.forEach(data, function (item) {
+                                $scope.model.categories.push(item);
+                            });
+                        })
+                        .error(function (message) {
+                            console.error(message);
+                        });
+                }
                 $scope.model = {};
                 $scope.model.products = [];
-                productsService.getProducts()
-                    .success(function (data) { $scope.model.products = data; })
-                    .error(function (message) { console.error(message); });
+                $scope.getByCategory();
+                $scope.getCategories();
             }
         ])
 
@@ -17,6 +34,8 @@
                 $location.path('/home');
             }
             $scope.authentication = authService.authentication;
+
+            //$scope.links = [{ name: 'Home', url: '#/home'}, { name: 'News', url: '#/news'}];
         }])
 
         .controller('ProductCtrl', [
@@ -62,7 +81,7 @@
                     }
                 }
             };
-            $scope.cleanSlide = function() {
+            $scope.cleanSlide = function () {
                 $scope.files = undefined;
                 $scope.slide.textForSlide = '';
             }
@@ -75,7 +94,7 @@
                 }).error(function (error) {
                     console.error(error);
                 });
-            
+
             $scope.isCollapsed = true;
         }])
 
@@ -93,6 +112,7 @@
                     });
             };
         }])
+
 
         .controller('NewsController', [
             '$scope', '$http', 'newsService', function ($scope, $http, newsService) {
@@ -135,6 +155,18 @@
                 $scope.getNews();
             }
         ])
+
+        .controller('NewEditController', ['$scope', '$routeParams', 'newsService', function ($scope, $routeParams, newsService) {
+            $scope.postedNew = {};
+            var id = $routeParams.id;
+            newsService.getNew(id)
+                .success(function(data) {
+                    $scope.postedNew = data;
+                })
+                .error(function(message) {
+                    console.log(message);
+                });
+        }])
 
         .controller('SignupController', ['$scope', '$location', '$timeout', 'authService', function ($scope, $location, $timeout, authService) {
 

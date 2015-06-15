@@ -24,6 +24,7 @@ namespace Market.WebUI.Controllers
 
         // GET: api/PostedNews/5
         [ResponseType(typeof(PostedNew))]
+        [Route("{id}")]
         public async Task<IHttpActionResult> GetPostedNew(int id)
         {
             PostedNew postedNew = await db.PostedNews.FindAsync(id);

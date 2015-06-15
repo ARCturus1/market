@@ -14,11 +14,23 @@
                 $routeProvider
                     .when('/home', {
                         templateUrl: 'Views/home.html',
-                        controller: 'HomeController'
+                        controller: 'CatalogController'
                     })
+                    .when('/home/:id', {
+                        templateUrl: 'Views/productDetails.html',
+                        controller: 'ProductController'
+                    })
+                    //.when('/home/category/{category}', {
+                    //    templateUrl: 'Views/home.html',
+                    //    controller: 'CatalogControllerByCategory'
+                    //})
                     .when('/news', {
                         templateUrl: 'Views/news.html',
                         controller: 'NewsController'
+                    })
+                    .when('/news/:id', {
+                        templateUrl: 'Views/newEdit.html',
+                        controller: 'NewEditController'
                     })
                     .when('/login', {
                         templateUrl: 'Views/login.html',

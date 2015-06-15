@@ -1,6 +1,12 @@
-﻿<div>
-        <div ng-repeat="product in model.products">
-            <product-ctrl></product-ctrl>
-
-        </div> 
+﻿<div class="col-md-3">
+    <div class="list-group" ng-init="categoryModel.active = 0">
+        <a class="list-group-item animate" ng-click="$index !== 0 ? getByCategory(category, $index) : getByCategory(); categoryModel.active = $index"
+           ng-repeat="category in model.categories"
+           ng-class="{'active' : categoryModel.active === $index}">{{category}}</a>
+    </div>
+</div>
+<div class="col-md-9">
+    <div ng-repeat="product in model.products  | filter : searchPattern" class="animate">
+        <product-ctrl></product-ctrl>
+    </div>
 </div>

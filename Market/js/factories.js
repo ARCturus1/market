@@ -1,8 +1,8 @@
-(function() {
+(function () {
     'use strict';
     angular.module('market.factories', [])
         .factory('authService', [
-            '$http', '$q', 'localStorageService', function($http, $q, localStorageService) {
+            '$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
                 console.log('in authService');
                 var serviceBase = '';
                 var authServiceFactory = {};
@@ -12,23 +12,23 @@
                     userName: ""
                 };
 
-                var _saveRegistration = function(registration) {
+                var _saveRegistration = function (registration) {
 
                     _logOut();
 
-                    return $http.post(serviceBase + 'api/account/register', registration).then(function(response) {
+                    return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
                         return response;
                     });
 
                 };
 
-                var _login = function(loginData) {
+                var _login = function (loginData) {
 
                     var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
                     var deferred = $q.defer();
 
-                    $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function(response) {
+                    $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
 
                         localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
 
@@ -37,7 +37,7 @@
 
                         deferred.resolve(response);
 
-                    }).error(function(err, status) {
+                    }).error(function (err, status) {
                         _logOut();
                         deferred.reject(err);
                     });
@@ -46,7 +46,7 @@
 
                 };
 
-                var _logOut = function() {
+                var _logOut = function () {
 
                     localStorageService.remove('authorizationData');
 
@@ -55,7 +55,7 @@
 
                 };
 
-                var _fillAuthData = function() {
+                var _fillAuthData = function () {
 
                     var authData = localStorageService.get('authorizationData');
                     if (authData) {
@@ -75,11 +75,11 @@
             }
         ])
         .factory('authInterceptorService', [
-            '$q', '$location', 'localStorageService', function($q, $location, localStorageService) {
+            '$q', '$location', 'localStorageService', function ($q, $location, localStorageService) {
 
                 var authInterceptorServiceFactory = {};
 
-                var _request = function(config) {
+                var _request = function (config) {
 
                     config.headers = config.headers || {};
 
@@ -91,7 +91,7 @@
                     return config;
                 }
 
-                var _responseError = function(rejection) {
+                var _responseError = function (rejection) {
                     if (rejection.status === 401) {
                         $location.path('/login');
                     }
@@ -105,36 +105,47 @@
             }
         ])
         .factory('newsService', [
-            '$http', function($http) {
+            '$http', function ($http) {
                 return {
-                    addNew: function(name, description) {
+                    addNew: function (name, description) {
                         return $http.post('api/news/addnew', { Name: name, Description: description });
                     },
-                    getNews: function() {
+                    getNews: function () {
                         return $http.get('api/news');
                     },
-                    deleteNew: function(id) {
+                    getNew: function (id) {
+                        return $http.get('api/news/' + id);
+                    },
+                    deleteNew: function (id) {
                         return $http.delete('api/news/deletenew/' + id);
                     }
                 }
             }
         ])
         .factory('productsService', [
-            '$http', function($http) {
+            '$http', function ($http) {
                 return {
-                    getProducts: function() {
+                    getProducts: function (category) {
+                        if (!!category)
+                            return $http.get('api/products/byCategory/' + category);
                         return $http.get('api/Products');
+                    },
+                    getProduct: function(id) {
+                        return $http.get('api/products/product/' + id);
+                    },
+                    getCategories: function() {
+                        return $http.get('api/products/categories');
                     }
                 }
             }
         ])
         .factory('sliderService', [
-            '$http', function($http) {
+            '$http', function ($http) {
                 return {
-                    getSlides: function() {
+                    getSlides: function () {
                         return $http.get('api/slider');
                     },
-                    deleteSlide: function(id) {
+                    deleteSlide: function (id) {
                         return $http.delete('api/slider/' + id);
                     }
                 }
