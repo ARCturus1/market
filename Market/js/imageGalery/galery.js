@@ -1,6 +1,7 @@
-﻿(function() {
-    'use strict';
-    angular.module('market', ['ngAnimate'])
+﻿'use strict';
+
+(function () {
+    angular.module('market.galery', ['ngAnimate', 'ngTouch'])
         .controller('GaleryController', [
             '$scope', function($scope) {
 

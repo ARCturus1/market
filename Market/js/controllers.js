@@ -160,13 +160,26 @@
             $scope.postedNew = {};
             var id = $routeParams.id;
             newsService.getNew(id)
-                .success(function(data) {
+                .success(function (data) {
                     $scope.postedNew = data;
                 })
-                .error(function(message) {
+                .error(function (message) {
                     console.log(message);
                 });
         }])
+
+        .controller('ProductController', ['$scope', '$routeParams', 'productsService', function ($scope, $routeParams, productsService) {
+            $scope.product = {};
+            var id = $routeParams.id;
+                productsService.getProduct(id)
+                    .success(function(data) {
+                        $scope.product = data;
+                    })
+                    .error(function(message) {
+                        console.error(message);
+                    });
+            }
+        ])
 
         .controller('SignupController', ['$scope', '$location', '$timeout', 'authService', function ($scope, $location, $timeout, authService) {
 
