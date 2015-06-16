@@ -16,6 +16,7 @@
     <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
     <script src="Scripts/ng-file-upload-shim.min.js"></script>
     <script src="Scripts/ng-file-upload-all.min.js"></script>
+    <!--<script src="js/imageGalery/galery.js"></script>-->
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/loading-bar.min.css" rel="stylesheet" />
     <link href="Content/style.css" rel="stylesheet"/>
@@ -34,7 +35,7 @@
 
             <nav class="navbar-right">
                 <ul class="nav navbar-nav">
-                    <li data-ng-hide="!authentication.isAuth"><a href="javascript.void()">Welcome {{authentication.userName}}</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="javascript:void()">Welcome {{authentication.userName}}</a></li>
                     <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>

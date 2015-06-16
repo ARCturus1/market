@@ -1,4 +1,4 @@
-﻿<link href="../Content/Views/news.css" rel="stylesheet" />
+﻿<link href="Content/Views/news.css" rel="stylesheet" />
 <div ng-repeat="postedNew in model.news | filter : searchPattern" class="animate col-md-3" ng-class="{'row' : ($index + 1) % 4 === 0}">
     <!--<div class="panel-heading">
         {{postedNew.Name}}

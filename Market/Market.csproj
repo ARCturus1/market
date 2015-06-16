@@ -14,7 +14,7 @@
     <RootNamespace>Market.WebUI</RootNamespace>
     <AssemblyName>Market.WebUI</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -149,6 +149,9 @@
     <Content Include="js\app.js" />
     <Content Include="js\directives.js" />
     <Content Include="js\factories.js" />
+    <Content Include="js\imageGalery\galery.css" />
+    <Content Include="js\imageGalery\galery.html" />
+    <Content Include="js\imageGalery\galery.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
@@ -1021,7 +1024,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9242</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:9242/</IISUrl>
+          <IISUrl>http://localhost/Market</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
