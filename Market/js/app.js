@@ -9,6 +9,7 @@
         'LocalStorageModule',
         'ui.bootstrap',
         'ngFileUpload',
+        'textAngular',
         'market.galery'])
         .config([
             '$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
@@ -21,10 +22,6 @@
                         templateUrl: 'Views/productDetails.html',
                         controller: 'ProductController'
                     })
-                    //.when('/home/category/{category}', {
-                    //    templateUrl: 'Views/home.html',
-                    //    controller: 'CatalogControllerByCategory'
-                    //})
                     .when('/news', {
                         templateUrl: 'Views/news.html',
                         controller: 'NewsController'

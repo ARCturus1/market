@@ -1,28 +1,29 @@
 ﻿<link href="Content/Views/news.css" rel="stylesheet" />
-<div ng-repeat="postedNew in model.news | filter : searchPattern" class="animate col-md-3" ng-class="{'row' : ($index + 1) % 4 === 0}">
-    <!--<div class="panel-heading">
+<div ng-repeat="postedNew in model.news | filter : searchPattern" class="animate panel" >
+    <div class="panel-heading">
         {{postedNew.Name}}
     </div>
     <div class="panel-body">
         <div class="col-md-10">
-            {{postedNew.Description | limitTo : 500}}
+            postedNew.Description | limitTo : 500
         </div>
         <div class="col-md-2">
             <button class="btn btn-warning" ng-click="editNew(postedNew)">Edit</button>
             <button class="btn btn-danger" ng-click="deleteNew(postedNew)">Delete</button>
         </div>
-    </div>-->
-    <div>
-        <!--<p><i class="icon icon-bolt"></i></p>-->
+    </div>
+    <!--<div>
+        
         <h2 class="font-thin"><a href="#news/{{postedNew.NewId}}" class="news-title">{{postedNew.Name}}</a></h2>
         <h4 class="font-thin">{{postedNew.Description | limitTo : 200}}</h4>
         <p>
-            <!--<button class="btn btn-warning" ng-click="editNew(postedNew)">Edit</button>-->
-            <button class="btn btn-danger col-md-4" ng-click="deleteNew(postedNew)">
+            
+            <button ng-if="authentication.isAuth && authentication.userName == 'admin'"
+                     class="btn btn-danger col-md-4" ng-click="deleteNew(postedNew)">
                 <span class="glyphicon glyphicon-remove"></span> Delete
             </button>
         </p>
-    </div>
+    </div>-->
 </div>
 <div class="row" ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-init="isCollapsed=true">
     <br>
@@ -34,7 +35,10 @@
         <div class="well well-lg">
             <form ng-submit="addNew()">
                 <p><input class="form-control" ng-model="model.NewName" type="text" required /></p>
-                <p><textarea class="form-control" ng-model="model.NewDescription" required></textarea></p>
+                <p>
+                    <div text-angular ng-model="model.NewDescription" required></div>
+                    <!--<textarea class="form-control" ng-model="model.NewDescription" required></textarea>-->
+                </p>
                 <p><input type="submit" class="btn btn-warning" value="Добавить" /></p>
             </form>
         </div>

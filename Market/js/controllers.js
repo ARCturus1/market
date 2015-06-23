@@ -28,14 +28,16 @@
             }
         ])
 
-        .controller('IndexController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
-            $scope.logOut = function () {
-                authService.logOut();
-                $location.path('/home');
-            }
-            $scope.authentication = authService.authentication;
-
-            //$scope.links = [{ name: 'Home', url: '#/home'}, { name: 'News', url: '#/news'}];
+        .controller('ProductController', ['$scope', '$routeParams', 'productsService', function ($scope, $routeParams, productsService) {
+            $scope.product = {};
+            var id = $routeParams.id;
+            productsService.getProduct(id)
+                .success(function (data) {
+                    $scope.product = data;
+                })
+                .error(function (message) {
+                    console.error(message);
+                });
         }])
 
         .controller('ProductCtrl', [
@@ -46,6 +48,16 @@
             }
         ])
 
+        .controller('IndexController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
+            $scope.logOut = function () {
+                authService.logOut();
+                $location.path('/home');
+            }
+            $scope.authentication = authService.authentication;
+
+            //$scope.links = [{ name: 'Home', url: '#/home'}, { name: 'News', url: '#/news'}];
+        }])
+        
         .controller('SliderCtrl', ['$scope', 'Upload', 'sliderService', function ($scope, upload, sliderService) {
             $scope.slide = {};
             $scope.slide.textForSlide = '';
@@ -167,19 +179,6 @@
                     console.log(message);
                 });
         }])
-
-        .controller('ProductController', ['$scope', '$routeParams', 'productsService', function ($scope, $routeParams, productsService) {
-            $scope.product = {};
-            var id = $routeParams.id;
-                productsService.getProduct(id)
-                    .success(function(data) {
-                        $scope.product = data;
-                    })
-                    .error(function(message) {
-                        console.error(message);
-                    });
-            }
-        ])
 
         .controller('SignupController', ['$scope', '$location', '$timeout', 'authService', function ($scope, $location, $timeout, authService) {
 

@@ -28,3 +28,7 @@
 /// <reference path="ng-file-upload.min.js" />
 /// <reference path="fileapi.min.js" />
 /// <reference path="../js/imagegalery/galery.js" />
+/// <reference path="textangular-rangy.min.js" />
+/// <reference path="textangular-sanitize.js" />
+/// <reference path="textangular.js" />
+/// <reference path="textangularsetup.js" />
