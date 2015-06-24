@@ -1,11 +1,46 @@
 ﻿.news-title {
-    color: #555;
     text-align: center;
+    -moz-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 100px;
 }
-.news-title:hover {
-    color: #555;
-    text-decoration: none;
-    background-color: #e7e7e7;
-    margin: 0;
-    
+
+    .news-title a {
+        color: #555;
+    }
+
+    .news-title:hover {
+        color: #555;
+        background-color: #e7e7e7;
+    }
+
+        .news-title:hover a {
+            text-decoration: none;
+        }
+
+.news-item {
+    height: 300px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    margin: 20px;
+}
+
+.news-short-desk {
+    height: 200px;
+    margin-top: 10px;
+    -moz-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.news-delete-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
 }

@@ -28,16 +28,16 @@ namespace MobileStore.Domain.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            context.PostedNews.AddOrUpdate(n => n.Name,
-                new PostedNew()
-                {
-                    Name = "New 1 the best new in world!",
-                    Description = "The new about the best thinks in my own live and more, more, more..."
-                }, new PostedNew()
-                {
-                    Name = "New 2 the best new in world!",
-                    Description = "The new about the best thinks in my own live and more, more, more..."
-                });
+            //context.PostedNews.AddOrUpdate(n => n.Name,
+            //    new PostedNew()
+            //    {
+            //        Name = "New 1 the best new in world!",
+            //        Description = "The new about the best thinks in my own live and more, more, more..."
+            //    }, new PostedNew()
+            //    {
+            //        Name = "New 2 the best new in world!",
+            //        Description = "The new about the best thinks in my own live and more, more, more..."
+            //    });
         }
     }
 }

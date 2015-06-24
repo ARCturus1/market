@@ -16,9 +16,14 @@ namespace MobileStore.Domain.Entities
         [MaxLength(255)]
         public string Name { get; set; }
 
-        [MaxLength(2000)]
+        [MaxLength(500)]
+        public string ShortDesk { get; set; }
+
+        [MaxLength(4000)]
         [Required(ErrorMessage = "Please enter a description")]
         public string Description { get; set; }
+
+        public DateTime? Date { get; set; }
 
         public File File { get; set; }
     }

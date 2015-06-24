@@ -1,8 +1,14 @@
-﻿<form class="form-login" role="form" novalidate>
-    <h2 class="form-login-heading">Login</h2>
-    <input type="text" class="form-control" placeholder="Username" data-ng-model="loginData.userName" required autofocus>
-    <input type="password" class="form-control" placeholder="Password" data-ng-model="loginData.password" required>
-    <button class="btn btn-lg btn-info btn-block" type="submit" data-ng-click="login()">Login</button>
+﻿<form role="form">
+    <h2>Login</h2>
+    <div class="form-group">
+        <label for="userName">Имя пользователя</label>
+        <input id="userName" type="text" class="form-control" placeholder="Username" data-ng-model="loginData.userName" required autofocus>
+    </div>
+    <div class="form-group">
+        <label for="password">Пароль</label>
+        <input id="password" type="password" class="form-control" placeholder="Password" data-ng-model="loginData.password" required>
+    </div>
+    <p><button class="btn btn-info" type="submit" data-ng-click="login()">Login</button></p>
     <div data-ng-hide="message == ''" class="alert alert-danger">
         {{message}}
     </div>

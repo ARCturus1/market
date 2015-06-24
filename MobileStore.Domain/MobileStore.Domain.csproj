@@ -75,6 +75,10 @@
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
     <Compile Include="Entities\SliderItem.cs" />
+    <Compile Include="Migrations\201506241256554_DataMigration.cs" />
+    <Compile Include="Migrations\201506241256554_DataMigration.Designer.cs">
+      <DependentUpon>201506241256554_DataMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -93,6 +97,11 @@
     <Content Include="DataBase\db.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201506241256554_DataMigration.resx">
+      <DependentUpon>201506241256554_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

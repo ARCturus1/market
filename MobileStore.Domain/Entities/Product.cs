@@ -22,6 +22,8 @@ namespace MobileStore.Domain.Entities
         [Required(ErrorMessage = "Please specify a category")]
         public string Category { get; set; }
 
-        public File File { get; set; }
+        public File TitleImage { get; set; }
+
+        public ICollection<File> Images { get; set; }
     }
 }

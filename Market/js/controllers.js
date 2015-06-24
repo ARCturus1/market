@@ -136,11 +136,12 @@
 
                 $scope.model.NewName = '';
                 $scope.model.NewDescription = '';
+                $scope.model.NewShortDesk = '';
                 $scope.addNew = function () {
                     if ($scope.model.NewName == '' || $scope.model.NewDescription == '')
                         return;
 
-                    newsService.addNew($scope.model.NewName, $scope.model.NewDescription)
+                    newsService.addNew($scope.model.NewName, $scope.model.NewShortDesk, $scope.model.NewDescription)
                         .success(function () {
                             $scope.model.NewName = '';
                             $scope.model.NewDescription = '';

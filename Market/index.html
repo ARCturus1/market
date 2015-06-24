@@ -25,7 +25,7 @@
     <link href="Content/loading-bar.min.css" rel="stylesheet" />
     <link href="Content/style.css" rel="stylesheet" />
     <link href="Content/animations.css" rel="stylesheet" />
-    <link href="Content/textAngular.css" rel="stylesheet"/>
+    <link href="Content/textAngular.css" rel="stylesheet" />
     <link href="Content/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body ng-controller="IndexController">
@@ -41,27 +41,21 @@
                 <li ng-class="{'active' : model.active === $index}"
                     ng-repeat="link in model.links"><a href="{{link.url}}" ng-click="model.active = $index">{{link.name}}</a></li>
             </ul>
-
-            <nav class="navbar-right">
-                <ul class="nav navbar-nav">
-                    <li data-ng-hide="!authentication.isAuth"><a href="javascript:void()">Welcome {{authentication.userName}}</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="javascript:void()" data-ng-click="logOut()">Logout</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
-                </ul>
-            </nav>
-            <form class="navbar-form navbar-right" role="search">
-                <!--<div class="form-group">-->
-                    <input type="text" class="form-control" ng-model="searchPattern" style="border-color: #ccc">
-                <!--</div>-->
-                <!--<button type="submit" class="btn btn-default">Отправить</button>-->
-            </form>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 10px;">
+                <li data-ng-hide="!authentication.isAuth"><a href="javascript:void()">Welcome {{authentication.userName}}</a></li>
+                <li data-ng-hide="!authentication.isAuth"><a href="javascript:void()" data-ng-click="logOut()">Logout</a></li>
+                <!--<li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
+                <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>-->
+            </ul>
+            <input type="text" class="navbar-form navbar-right form-control" placeholder="поиск..." style="margin-right: 10px;"
+                   ng-model="searchPattern">
         </nav>
     </div>
     <div class="container">
         <ng-view></ng-view>
     </div>
-
-
+    <footer>
+        <div class="container"></div>
+    </footer>
 </body>
 </html>

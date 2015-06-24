@@ -107,8 +107,8 @@
         .factory('newsService', [
             '$http', function ($http) {
                 return {
-                    addNew: function (name, description) {
-                        return $http.post('api/news/addnew', { Name: name, Description: description });
+                    addNew: function (name, shortDesk, description) {
+                        return $http.post('api/news/addnew', { Name: name, Description: description, ShortDesk: shortDesk });
                     },
                     getNews: function () {
                         return $http.get('api/news');

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -19,7 +20,7 @@ namespace Market.WebUI.Controllers
         [Route("")]
         public IQueryable<PostedNew> GetPostedNews()
         {
-            return db.PostedNews;
+            return db.PostedNews.OrderBy(p => p.Date);
         }
 
         // GET: api/PostedNews/5
@@ -82,7 +83,7 @@ namespace Market.WebUI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            postedNew.Date = DateTime.UtcNow;
             db.PostedNews.Add(postedNew);
             await db.SaveChangesAsync();
 
