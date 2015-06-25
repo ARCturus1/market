@@ -140,11 +140,11 @@
                 $scope.addNew = function () {
                     if ($scope.model.NewName == '' || $scope.model.NewDescription == '')
                         return;
-                    var deskArray = [];
-                    for (var i = 0; i < $scope.model.NewDescription.length / 4000; i++) {
-                        deskArray[i] = { Item: $scope.model.NewDescription.substr(i * 4000, 4000) };
-                    }
-                    newsService.addNew($scope.model.NewName, $scope.model.NewShortDesk, deskArray)
+                    //var deskArray = [];
+                    //for (var i = 0; i < $scope.model.NewDescription.length / 4000; i++) {
+                    //    deskArray[i] = { Item: $scope.model.NewDescription.substr(i * 4000, 4000) };
+                    //}
+                    newsService.addNew($scope.model.NewName, $scope.model.NewShortDesk, $scope.model.NewDescription)
                         .success(function () {
                             $scope.model.NewName = '';
                             $scope.model.NewDescription = '';
@@ -178,10 +178,11 @@
             var id = $routeParams.id;
             newsService.getNew(id)
                 .success(function (data) {
-                    $scope.postedNew = { Name: data.Name };
-                    angular.forEach(data.Description, function (item) {
-                        $scope.postedNew.Description += item.Item;
-                    });
+                    //$scope.postedNew = { Name: data.Name };
+                    //angular.forEach(data.Description, function (item) {
+                    //    $scope.postedNew.Description += item.Item;
+                    //});
+                    $scope.postedNew = data;
                 })
                 .error(function (message) {
                     console.log(message);

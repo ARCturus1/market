@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +21,10 @@ namespace MobileStore.Domain.Entities
         [MaxLength(500)]
         public string ShortDesk { get; set; }
 
-        //[MaxLength(4000)]
-        //[Required(ErrorMessage = "Please enter a description")]
-        public ICollection<DescItem> Description { get; set; }
+        [Column(TypeName = "ntext")]
+        [MaxLength]
+        [Required(ErrorMessage = "Please enter a description")]
+        public string Description { get; set; }
 
         public DateTime? Date { get; set; }
 

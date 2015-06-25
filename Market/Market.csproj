@@ -147,6 +147,7 @@
     <Content Include="Content\style.css" />
     <Content Include="Content\textAngular.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="Content\Views\newEdit.css" />
     <Content Include="Content\Views\news.css" />
     <Content Include="Content\Views\slider.css" />
     <Content Include="Content\Views\sliderItem.css" />
