@@ -23,6 +23,7 @@ namespace MobileStore.Domain.DataLayer
         public DbSet<Product> Products { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<PostedNew> PostedNews { get; set; }
+        public DbSet<DescItem> DescItems { get; set; }
         public DbSet<SliderItem> SliderItems { get; set; }
     }
 }

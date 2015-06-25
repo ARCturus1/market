@@ -57,7 +57,7 @@
 
             //$scope.links = [{ name: 'Home', url: '#/home'}, { name: 'News', url: '#/news'}];
         }])
-        
+
         .controller('SliderCtrl', ['$scope', 'Upload', 'sliderService', function ($scope, upload, sliderService) {
             $scope.slide = {};
             $scope.slide.textForSlide = '';
@@ -140,11 +140,15 @@
                 $scope.addNew = function () {
                     if ($scope.model.NewName == '' || $scope.model.NewDescription == '')
                         return;
-
-                    newsService.addNew($scope.model.NewName, $scope.model.NewShortDesk, $scope.model.NewDescription)
+                    var deskArray = [];
+                    for (var i = 0; i < $scope.model.NewDescription.length / 4000; i++) {
+                        deskArray[i] = { Item: $scope.model.NewDescription.substr(i * 4000, 4000) };
+                    }
+                    newsService.addNew($scope.model.NewName, $scope.model.NewShortDesk, deskArray)
                         .success(function () {
                             $scope.model.NewName = '';
                             $scope.model.NewDescription = '';
+                            $scope.model.NewShortDesk = '';
                             $scope.getNews();
                         })
                         .error(_newsError);
@@ -174,7 +178,10 @@
             var id = $routeParams.id;
             newsService.getNew(id)
                 .success(function (data) {
-                    $scope.postedNew = data;
+                    $scope.postedNew = { Name: data.Name };
+                    angular.forEach(data.Description, function (item) {
+                        $scope.postedNew.Description += item.Item;
+                    });
                 })
                 .error(function (message) {
                     console.log(message);

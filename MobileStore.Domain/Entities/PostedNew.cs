@@ -19,9 +19,9 @@ namespace MobileStore.Domain.Entities
         [MaxLength(500)]
         public string ShortDesk { get; set; }
 
-        [MaxLength(4000)]
-        [Required(ErrorMessage = "Please enter a description")]
-        public string Description { get; set; }
+        //[MaxLength(4000)]
+        //[Required(ErrorMessage = "Please enter a description")]
+        public ICollection<DescItem> Description { get; set; }
 
         public DateTime? Date { get; set; }
 

@@ -28,7 +28,8 @@ namespace Market.WebUI.Controllers
         [Route("{id}")]
         public async Task<IHttpActionResult> GetPostedNew(int id)
         {
-            PostedNew postedNew = await db.PostedNews.FindAsync(id);
+            PostedNew postedNew = await db.PostedNews.SingleOrDefaultAsync(p => p.NewId == id);
+            //postedNew.Description
             if (postedNew == null)
             {
                 return NotFound();
