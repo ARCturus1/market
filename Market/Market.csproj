@@ -14,7 +14,7 @@
     <RootNamespace>Market.WebUI</RootNamespace>
     <AssemblyName>Market.WebUI</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -154,6 +154,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Icon.png" />
     <Content Include="js\app.js" />
+    <Content Include="js\contentEditable\editable.css" />
+    <Content Include="js\contentEditable\editable.js" />
     <Content Include="js\directives.js" />
     <Content Include="js\factories.js" />
     <Content Include="js\imageGalery\galery.css" />
@@ -1042,7 +1044,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9242</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:9242/</IISUrl>
+          <IISUrl>http://localhost/Market</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -40,6 +40,7 @@ namespace Market.WebUI.Controllers
 
         // PUT: api/PostedNews/5
         [Authorize(Users = "admin")]
+        [Route("putnew/{id}")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutPostedNew(int id, PostedNew postedNew)
         {
@@ -52,7 +53,7 @@ namespace Market.WebUI.Controllers
             {
                 return BadRequest();
             }
-
+            postedNew.Date = DateTime.UtcNow;
             db.Entry(postedNew).State = EntityState.Modified;
 
             try

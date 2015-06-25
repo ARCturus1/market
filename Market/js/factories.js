@@ -116,6 +116,9 @@
                     getNew: function (id) {
                         return $http.get('api/news/' + id);
                     },
+                    updateNew: function(postedNew) {
+                        return $http.put('api/news/putnew/' + postedNew.NewId, postedNew);
+                    },
                     deleteNew: function (id) {
                         return $http.delete('api/news/deletenew/' + id);
                     }

@@ -140,10 +140,7 @@
                 $scope.addNew = function () {
                     if ($scope.model.NewName == '' || $scope.model.NewDescription == '')
                         return;
-                    //var deskArray = [];
-                    //for (var i = 0; i < $scope.model.NewDescription.length / 4000; i++) {
-                    //    deskArray[i] = { Item: $scope.model.NewDescription.substr(i * 4000, 4000) };
-                    //}
+
                     newsService.addNew($scope.model.NewName, $scope.model.NewShortDesk, $scope.model.NewDescription)
                         .success(function () {
                             $scope.model.NewName = '';
@@ -176,17 +173,28 @@
         .controller('NewEditController', ['$scope', '$routeParams', 'newsService', function ($scope, $routeParams, newsService) {
             $scope.postedNew = {};
             var id = $routeParams.id;
-            newsService.getNew(id)
-                .success(function (data) {
-                    //$scope.postedNew = { Name: data.Name };
-                    //angular.forEach(data.Description, function (item) {
-                    //    $scope.postedNew.Description += item.Item;
-                    //});
-                    $scope.postedNew = data;
-                })
-                .error(function (message) {
-                    console.log(message);
-                });
+            var _getNew = function () {
+                newsService.getNew(id)
+                    .success(function (data) {
+                        $scope.postedNew = data;
+                    })
+                    .error(function (message) {
+                        console.log(message);
+                    });
+            }
+            $scope.save = function () {
+                newsService.updateNew($scope.postedNew)
+                    .success(function() {
+                        _getNew();
+                    }).error(function(message) {
+                        console.error(message);
+                    });
+            }
+            $scope.back = function() {
+                window.history.back();
+            }
+
+            _getNew();
         }])
 
         .controller('SignupController', ['$scope', '$location', '$timeout', 'authService', function ($scope, $location, $timeout, authService) {

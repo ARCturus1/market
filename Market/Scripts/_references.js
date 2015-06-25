@@ -32,3 +32,4 @@
 /// <reference path="textangular-sanitize.js" />
 /// <reference path="textangular.js" />
 /// <reference path="textangularsetup.js" />
+/// <reference path="../js/contenteditable/editable.js" />

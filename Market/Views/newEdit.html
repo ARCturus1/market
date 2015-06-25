@@ -1,6 +1,16 @@
 ﻿<link href="Content/Views/newEdit.css" rel="stylesheet" />
 
-<div class="panel panel-default animate col-md-8">
-    <div class="panel-heading"><h4>{{postedNew.Name}}</h4></div>
-    <div class="panel-body" ng-bind-html="postedNew.Description"></div>
+<div>
+    <h2 contenteditable ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="postedNew.Name"></h2>
+    <h2 ng-if="!(authentication.isAuth && authentication.userName == 'admin')">{{postedNew.Name}}</h2>
+
+    <h4 contenteditable="true" ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="postedNew.ShortDesk"></h4>
+    <h4 ng-if="!(authentication.isAuth && authentication.userName == 'admin')">{{postedNew.ShortDesk}}</h4>
+
+    <div ng-bind-html="postedNew.Description" ng-if="!(authentication.isAuth && authentication.userName == 'admin')"></div>
+    <div id="newDescription" text-angular ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="postedNew.Description" required></div>
+    <p ng-if="authentication.isAuth && authentication.userName == 'admin'">
+        <button class="btn btn-success" ng-click="save()">Сохранить</button>
+        <button class="btn btn-info" ng-click="back()">Назад</button>
+    </p>
 </div>

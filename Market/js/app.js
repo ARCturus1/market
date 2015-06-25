@@ -10,7 +10,8 @@
         'ui.bootstrap',
         'ngFileUpload',
         'textAngular',
-        'market.galery'])
+        'market.galery',
+        'contentEditable'])
         .config([
             '$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
                 $routeProvider

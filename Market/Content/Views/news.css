@@ -23,6 +23,7 @@
 
 .news-item {
     height: 300px;
+    width: 46%;
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
     -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
     box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
