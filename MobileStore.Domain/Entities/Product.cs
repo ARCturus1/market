@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MobileStore.Domain.Entities
 {
@@ -11,7 +12,12 @@ namespace MobileStore.Domain.Entities
         [Required(ErrorMessage = "Please enter a product name")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Please enter a short description")]
         [MaxLength(2000)]
+        public string ShortDesk { get; set; }
+
+        [Column(TypeName = "ntext")]
+        [MaxLength]
         [Required(ErrorMessage = "Please enter a description")]
         public string Description { get; set; }
 

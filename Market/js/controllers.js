@@ -31,13 +31,30 @@
         .controller('ProductController', ['$scope', '$routeParams', 'productsService', function ($scope, $routeParams, productsService) {
             $scope.product = {};
             var id = $routeParams.id;
-            productsService.getProduct(id)
-                .success(function (data) {
-                    $scope.product = data;
-                })
-                .error(function (message) {
-                    console.error(message);
-                });
+
+            var _getProduct = function () {
+                productsService.getProduct(id)
+                    .success(function (data) {
+                        $scope.product = data;
+                    })
+                    .error(function (message) {
+                        console.error(message);
+                    });
+            }
+
+            $scope.save = function () {
+                productsService.updateProduct($scope.product)
+                    .success(function () {
+                        _getProduct();
+                    }).error(function (message) {
+                        console.error(message);
+                    });
+            }
+            $scope.back = function () {
+                window.history.back();
+            }
+
+            _getProduct();
         }])
 
         .controller('ProductCtrl', [
@@ -184,13 +201,13 @@
             }
             $scope.save = function () {
                 newsService.updateNew($scope.postedNew)
-                    .success(function() {
+                    .success(function () {
                         _getNew();
-                    }).error(function(message) {
+                    }).error(function (message) {
                         console.error(message);
                     });
             }
-            $scope.back = function() {
+            $scope.back = function () {
                 window.history.back();
             }
 

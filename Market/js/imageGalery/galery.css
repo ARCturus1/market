@@ -68,10 +68,10 @@
 .slider {
     border: 15px solid #FFFFFF;
     border-radius: 5px;
-    height: 500px;
-    margin: 20px auto;
+    height: 400px;
+    /*margin: 20px auto;*/
     position: relative;
-    width: 800px;
+    width: 500px;
     -webkit-perspective: 1000px;
     -moz-perspective: 1000px;
     -ms-perspective: 1000px;
@@ -88,6 +88,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    width: 500px;
 }
 
     .slide.ng-hide-add {
@@ -96,11 +97,11 @@
         -moz-transition: 1s linear all;
         -o-transition: 1s linear all;
         transition: 1s linear all;
-        -webkit-transform: rotateX(50deg) rotateY(30deg);
+        /*-webkit-transform: rotateX(50deg) rotateY(30deg);
         -moz-transform: rotateX(50deg) rotateY(30deg);
         -ms-transform: rotateX(50deg) rotateY(30deg);
         -o-transform: rotateX(50deg) rotateY(30deg);
-        transform: rotateX(50deg) rotateY(30deg);
+        transform: rotateX(50deg) rotateY(30deg);*/
         -webkit-transform-origin: right top 0;
         -moz-transform-origin: right top 0;
         -ms-transform-origin: right top 0;

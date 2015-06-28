@@ -138,6 +138,9 @@
                     },
                     getCategories: function() {
                         return $http.get('api/products/categories');
+                    },
+                    updateProduct: function(product) {
+                        return $http.put('api/products/update/' + product.ProductID, product);
                     }
                 }
             }

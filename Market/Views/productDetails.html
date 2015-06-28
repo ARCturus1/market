@@ -1,1 +1,34 @@
-﻿<galery-ctrl></galery-ctrl>
+﻿
+<h2 contenteditable ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="product.Name"></h2>
+<h2 ng-if="!(authentication.isAuth && authentication.userName == 'admin')">{{product.Name}}</h2>
+<div class="row">
+    <galery-ctrl class="col-md-6"></galery-ctrl>
+    <div class="col-md-6">
+        <h4 contenteditable="true" ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="product.ShortDesk"></h4>
+        <h4 ng-if="!(authentication.isAuth && authentication.userName == 'admin')">{{product.ShortDesk}}</h4>
+    </div>
+</div>
+
+
+
+<div ng-bind-html="product.Description" ng-if="!(authentication.isAuth && authentication.userName == 'admin')"></div>
+<div text-angular ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="product.Description" required></div>
+<p ng-if="authentication.isAuth && authentication.userName == 'admin'">
+    <button class="btn btn-success" ng-click="save()">Сохранить</button>
+    <button class="btn btn-info" ng-click="back()">Назад</button>
+</p>
+
+<!--<div>
+    <h2 contenteditable ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="postedNew.Name"></h2>
+    <h2 ng-if="!(authentication.isAuth && authentication.userName == 'admin')">{{postedNew.Name}}</h2>
+
+    <h4 contenteditable="true" ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="postedNew.ShortDesk"></h4>
+    <h4 ng-if="!(authentication.isAuth && authentication.userName == 'admin')">{{postedNew.ShortDesk}}</h4>
+
+    <div ng-bind-html="postedNew.Description" ng-if="!(authentication.isAuth && authentication.userName == 'admin')"></div>
+    <div id="newDescription" text-angular ng-if="authentication.isAuth && authentication.userName == 'admin'" ng-model="postedNew.Description" required></div>
+    <p ng-if="authentication.isAuth && authentication.userName == 'admin'">
+        <button class="btn btn-success" ng-click="save()">Сохранить</button>
+        <button class="btn btn-info" ng-click="back()">Назад</button>
+    </p>
+</div>-->

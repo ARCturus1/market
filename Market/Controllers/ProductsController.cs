@@ -52,6 +52,7 @@ namespace Market.WebUI.Controllers
 
         // PUT: api/Products/5
         [Authorize(Users = "admin")]
+        [Route("update/{id}")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutProduct(int id, Product product)
         {
