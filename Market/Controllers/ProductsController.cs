@@ -1,8 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MobileStore.Domain.DataLayer;
@@ -18,14 +21,14 @@ namespace Market.WebUI.Controllers
         // GET: api/Products
         public IQueryable<Product> GetProducts()
         {
-            return db.Products;
+            return db.Products.Include(x => x.Images);
         }
 
         [Route("byCategory/{category}")]
         public IQueryable<Product> GetProducts(string category)
         {
             if (category != null)
-                return db.Products.Where(p => p.Category == category);
+                return db.Products.Include(x => x.Images).Where(p => p.Category == category);
             return db.Products;
         }
 
@@ -34,13 +37,25 @@ namespace Market.WebUI.Controllers
         [ResponseType(typeof(Product))]
         public async Task<IHttpActionResult> GetProduct(int id)
         {
-            Product product = await db.Products.FindAsync(id);
+            Product product = await db.Products.Include(x => x.Images).SingleAsync(p => p.ProductID == id);
             if (product == null)
             {
                 return NotFound();
             }
 
             return Ok(product);
+        }
+
+        [Route("images/{id}")]
+        public async Task<IHttpActionResult> GetImagesForProduct(int id)
+        {
+            Product product = await db.Products.Include(x => x.Images).SingleAsync(p => p.ProductID == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product.Images);
         }
 
         [Route("categories")]
@@ -100,7 +115,52 @@ namespace Market.WebUI.Controllers
             db.Products.Add(product);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = product.ProductID }, product);
+            return Ok(product);
+        }
+
+        [Authorize(Users = "admin")]
+        [Route("addImage/{id}")]
+        [ResponseType(typeof(Product))]
+        public async Task<IHttpActionResult> PostAddImageForProduct(int id)
+        {
+            Product product = await db.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            if (HttpContext.Current.Request.Files.Count > 0)
+            {
+                HttpFileCollection files = HttpContext.Current.Request.Files;
+
+                string fname = String.Empty;
+                for (int i = 0; i < files.Count; i++)
+                {
+                    HttpPostedFile file = files[i];
+
+                    fname = "Content/Images/" + file.FileName.Trim();
+                    file.SaveAs(HttpContext.Current.Server.MapPath("~/" + fname));
+                }
+                if (product.Images == null) product.Images = new List<File>();
+
+                product.Images.Add(new File() { FileName = fname });
+                db.Entry(product).State = EntityState.Modified;
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return Ok(product);
         }
 
         [Authorize(Users = "admin")]
@@ -118,6 +178,46 @@ namespace Market.WebUI.Controllers
             await db.SaveChangesAsync();
 
             return Ok(product);
+        }
+
+        //'api/products/' + productId + '/image/delete/' + imageId
+        [Authorize(Users = "admin")]
+        // DELETE: api/Products/5
+        [Route("{productId}/image/{imageId}")]
+        public async Task<IHttpActionResult> DeleteProductsImage(int productId, int imageId)
+        {
+            Product product = await db.Products.Include(x => x.Images).SingleOrDefaultAsync(x => x.ProductID == productId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var image = product.Images.SingleOrDefault(x => x.Id == imageId);
+            if (image != null)
+            {
+                var path = HttpContext.Current.Server.MapPath("~/" + image.FileName);
+                if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            }
+
+            product.Images.Remove(image);
+
+            db.Entry(product).State = EntityState.Modified;
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(productId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(product.Images);
         }
 
         protected override void Dispose(bool disposing)

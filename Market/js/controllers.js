@@ -28,9 +28,11 @@
             }
         ])
 
-        .controller('ProductController', ['$scope', '$routeParams', 'productsService', function ($scope, $routeParams, productsService) {
+        .controller('ProductController', ['$scope', '$routeParams', '$q', 'productsService', 'Upload',
+            function ($scope, $routeParams, $q, productsService, upload) {
             $scope.product = {};
             var id = $routeParams.id;
+            $scope.progreses = [];
 
             var _getProduct = function () {
                 productsService.getProduct(id)
@@ -38,6 +40,52 @@
                         $scope.product = data;
                     })
                     .error(function (message) {
+                        console.error(message);
+                    });
+            }
+
+            var _getImages = function () {
+                productsService.getImagesForProduct(id)
+                    .success(function (data) {
+                        $scope.product.Images = data;
+                    })
+                    .error(function (message) {
+                        console.error(message);
+                    });
+            }
+
+
+            $scope.uploadImage = function (files) {
+                if (files && files.length) {
+                    var arrayPromises = [];
+                    for (var i = 0; i < files.length; i++) {
+                        $scope.progreses[i] = 0;
+                        var file = files[i];
+                        arrayPromises.push(upload.upload({
+                            url: 'api/products/addImage/' + $scope.product.ProductID,
+                            file: file
+                        }).progress(function(evt) {
+                            $scope.progreses[i] = parseInt(100.0 * evt.loaded / evt.total);
+                        }));
+
+                    }
+                    $q.all(arrayPromises).then(
+                        function (values) {
+                            //$scope.progress = 0;
+                            _getImages();
+                        },
+                        function (message) {
+                            $scope.progreses[i] = 0;
+                            console.error(message);
+                        });
+                }
+            }
+
+            $scope.deleteImage = function (productId, imageId) {
+                productsService.deleteImage(productId, imageId).then(
+                    function(data) {
+                        $scope.product.Images = data.data;
+                    }, function(message) {
                         console.error(message);
                     });
             }
@@ -68,7 +116,8 @@
         .controller('IndexController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
             $scope.logOut = function () {
                 authService.logOut();
-                $location.path('/home');
+                //$location.path('/home');
+                window.history.back();
             }
             $scope.authentication = authService.authentication;
 

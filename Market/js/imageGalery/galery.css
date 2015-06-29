@@ -54,7 +54,7 @@
         /*height: 30px;*/
         margin: 0 8px;
         position: relative;
-        width: 50px;
+        width: 80px;
     }
 
         .nav-galery li.active {
@@ -89,6 +89,7 @@
     top: 0;
     left: 0;
     width: 500px;
+    height: 400px;
 }
 
     .slide.ng-hide-add {
@@ -125,3 +126,10 @@
         .slide, .slide.ng-hide-remove.ng-hide-remove-active {
             opacity: 1;
         }
+
+
+.image-delete-button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}

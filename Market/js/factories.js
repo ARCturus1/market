@@ -141,6 +141,12 @@
                     },
                     updateProduct: function(product) {
                         return $http.put('api/products/update/' + product.ProductID, product);
+                    },
+                    getImagesForProduct: function(id) {
+                        return $http.get('api/products/images/' + id);
+                    },
+                    deleteImage: function(productId, imageId) {
+                        return $http.delete('api/products/' + productId + '/image/' + imageId);
                     }
                 }
             }
