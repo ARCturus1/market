@@ -1,21 +1,21 @@
 ﻿<link href="js/imageGalery/galery.css" rel="stylesheet" />
-    <!-- slider container -->
-    <div class="slider">
-        <!-- enumerate all photos -->
-        <img ng-repeat="photo in product.Images" class="slide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" ng-src="{{photo.FileName}}" />
-        <!-- prev / next controls -->
-        <a class="arrow prev" ng-click="showPrev()"></a>
-        <a class="arrow next" ng-click="showNext()"></a>
-        <!-- extra navigation controls -->
-        <ul class="nav-galery">
-            <li ng-repeat="photo in product.Images" ng-class="{'active':isActive($index)}">
-                <img ng-src="{{photo.FileName}}" alt="{{photo.desc}}" title="{{photo.desc}}" ng-click="showPhoto($index);"/>
-                <!--<button ng-if="authentication.isAuth && authentication.userName == 'admin'"
-                        class="image-delete-button btn btn-danger"
-                        ng-click="deleteNew(postedNew)">-->
-                <span class="glyphicon glyphicon-remove image-delete-button"
-                      ng-click="deleteImage(product.ProductID, photo.Id)"></span>
-                <!--</button>-->
-            </li>
-        </ul>
-    </div>
+<!-- slider container -->
+<div class="slider">
+    <!-- enumerate all photos -->
+    <img ng-repeat="photo in product.Images" class="slide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" ng-src="{{photo.FileName}}" />
+    <!-- prev / next controls -->
+    <a class="arrow prev" ng-click="showPrev()"></a>
+    <a class="arrow next" ng-click="showNext()"></a>
+    <!-- extra navigation controls -->
+    <ul class="nav-galery">
+        <li ng-repeat="photo in product.Images" ng-class="{'active':isActive($index)}">
+            <img ng-src="{{photo.FileName}}" alt="{{photo.desc}}" title="{{photo.desc}}" ng-click="showPhoto($index);" />
+            <!--<button ng-if="authentication.isAuth && authentication.userName == 'admin'"
+                    class="image-delete-button btn btn-danger"
+                    ng-click="deleteNew(postedNew)">-->
+            <span class="glyphicon glyphicon-remove image-delete-button"
+                  ng-click="deleteImage(product.ProductID, photo.Id)"></span>
+            <!--</button>-->
+        </li>
+    </ul>
+</div>

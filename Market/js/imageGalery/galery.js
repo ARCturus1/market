@@ -30,7 +30,7 @@
 
                 // show next image
                 $scope.showNext = function () {
-                    $scope._Index = ($scope._Index < $scope.product.Images - 1) ? ++$scope._Index : 0;
+                    $scope._Index = ($scope._Index < $scope.product.Images.length - 1) ? ++$scope._Index : 0;
                 };
 
                 // show a certain image
